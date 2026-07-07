@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <title>To Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="list.js" type="module"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div id="title-bar">
+            <h1 id="title">List Name</h1>
+        </div>
+        <div id="list">
+            <ul id="todo-list">
+            </ul>
+        </div>
+
+
+        <div class="form">
+            <input id="item-input" type="text" placeholder="New task...">
+            <button id="add-button" type="submit">Add</button>
+        </div>
+    </div>
+</body>
+
+</html>
