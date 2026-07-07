@@ -1,15 +1,12 @@
-let getList = () => {
-    return list;
+export function createTask(title, newID) {
+    let newTask = {
+        id: newID,
+        title: title
+    };
+
+    return newTask;
 }
 
-let getListItem = (id) => {
-    return list.find(item => item.id === id);
+export function deleteTask(tasks, id) {
+    return tasks.filter(task => task.id !== id);
 }
-
-let setListItem = (text) => {
-    let newTask = { id: list.length + 1, text: text };
-    list.push(newTask);
-    console.log(list);
-}
-
-export { getList, getListItem, setListItem };

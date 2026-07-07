@@ -1,3 +1,5 @@
+import {createTask, deleteTask} from '../logic/taskManager.js';
+
 let tasks = [];
 
 window.storage.getTasks().then(loadedTasks => {
@@ -6,60 +8,52 @@ window.storage.getTasks().then(loadedTasks => {
 })
 
 window.onload = () => {
-    loadTasks();
-
     let input = document.querySelector('#item-input');
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && input.value !== '') {
-            createTask();
+            createTaskUI();
         }
     });
-
-
 }
 
 document.querySelector('#add-button').addEventListener('click', () => {
-    createTask();
+    createTaskUI();
 });
 
+// loads tasks from storage
 let loadTasks = () => {
     tasks.map(task => {
-        const listItem = document.createElement('li');
-        listItem.classList.add('list-item')
-        listItem.textContent = task.title;
-        document.querySelector('#todo-list').appendChild(listItem);
-
-        let deleteButton = document.createElement('button');
-        deleteButton.classList.add('delete-button');
-        deleteButton.textContent = 'Delete';
-        listItem.appendChild(deleteButton);
-
-        deleteButton.addEventListener('click', () => {
-            listItem.remove();
-        });
+        createTaskElement(task);
     })
 }
 
-let createTask = () => {
+// This creates a task from the UI and saves it
+let createTaskUI = () => {
     const itemInput = document.querySelector('#item-input');
-    const listItem = document.createElement('li');
-    listItem.classList.add('list-item')
-    listItem.textContent = itemInput.value;
-    document.querySelector('#todo-list').appendChild(listItem);
+    let newTask = createTask(itemInput.value, tasks.length + 1);
+
+    tasks.push(newTask);
+
+    window.storage.saveTasks(tasks);
+
+    createTaskElement(newTask);
     itemInput.value = '';
+}
+
+// This generates the HTML for a task
+function createTaskElement(task) {
+    const taskElement = document.createElement('li');
+    taskElement.classList.add('list-item')
+    taskElement.textContent = task.title;
+    document.querySelector('#todo-list').appendChild(taskElement);
 
     let deleteButton = document.createElement('button');
     deleteButton.classList.add('delete-button');
     deleteButton.textContent = 'Delete';
-    listItem.appendChild(deleteButton);
+    taskElement.appendChild(deleteButton);
 
     deleteButton.addEventListener('click', () => {
-        listItem.remove();
+        taskElement.remove();
     });
-
-    setListItem(itemInput.value);
 }
-
-
-
 

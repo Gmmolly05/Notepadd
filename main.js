@@ -11,6 +11,7 @@ const __dirname = path.dirname(__filename);
 
 
 ipcMain.handle('get-tasks', () => loadTasks(dataPath));
+ipcMain.handle('set-tasks', (event, tasks) => saveTasks(dataPath, tasks));
 
 const createWindow = () => {
 
