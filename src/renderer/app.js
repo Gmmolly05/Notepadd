@@ -11,13 +11,13 @@ window.onload = () => {
     let input = document.querySelector('#item-input');
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && input.value !== '') {
-            createTaskUI();
+            addTask();
         }
     });
 }
 
 document.querySelector('#add-button').addEventListener('click', () => {
-    createTaskUI();
+    addTask();
 });
 
 // loads tasks from storage
@@ -27,8 +27,8 @@ let loadTasks = () => {
     })
 }
 
-// This creates a task from the UI and saves it
-let createTaskUI = () => {
+// This adds a task from the UI and saves it
+let addTask = () => {
     const itemInput = document.querySelector('#item-input');
     let newTask = createTask(itemInput.value, tasks.length + 1);
 
@@ -53,7 +53,13 @@ function createTaskElement(task) {
     taskElement.appendChild(deleteButton);
 
     deleteButton.addEventListener('click', () => {
+        removeTask(task);
         taskElement.remove();
     });
+}
+
+function removeTask(task) {
+    tasks = deleteTask(tasks, task.id);
+    window.storage.saveTasks(tasks);
 }
 
