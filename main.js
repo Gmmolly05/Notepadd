@@ -15,7 +15,8 @@ const createWindow = () => {
         x: width - windowWidth - margin,
         y: height - windowHeight - margin,
         frame: false,
-        alwaysOnTop: true
+        alwaysOnTop: true,
+        transparent: true
     });
 
     win.loadFile('index.html');
