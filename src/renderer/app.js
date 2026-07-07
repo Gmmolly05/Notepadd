@@ -1,6 +1,9 @@
-import { getList, getListItem, setListItem } from '../storage/tasks.js'
+console.log("renderer loaded");
 
-window.storage.getTasks().then(tasks => console.log(tasks));
+window.storage.getTasks()
+    .then(tasks => {
+        console.log(tasks);
+    });
 
 window.onload = () => {
     loadTasks();

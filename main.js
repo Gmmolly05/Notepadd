@@ -6,11 +6,11 @@ import { loadTasks, saveTasks } from './src/storage/tasks.js';
 
 const dataPath = path.join(app.getPath('userData'), 'tasks.json');
 
-const __filename = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
-ipcMain.handle('get-tasks', () => loadTasks());
+ipcMain.handle('get-tasks', () => loadTasks(dataPath));
 
 const createWindow = () => {
 
@@ -52,7 +52,7 @@ app.whenReady().then(() => {
     checkDataFile();
 
     const list = loadTasks(dataPath);
-    console.log(list);
+    //console.log(list);
 
     createWindow();
 
