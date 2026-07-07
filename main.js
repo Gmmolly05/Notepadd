@@ -1,12 +1,16 @@
-import { app, screen, BrowserWindow } from 'electron';
+import { app, screen, ipcMain, BrowserWindow } from 'electron';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
+import { loadTasks, saveTasks } from './src/storage/tasks.js';
 
 const dataPath = path.join(app.getPath('userData'), 'tasks.json');
 
 const __filename = path.dirname(fileURLToPath(import.meta.url));
 const __dirname = path.dirname(__filename);
+
+
+ipcMain.handle('get-tasks', () => loadTasks());
 
 const createWindow = () => {
 
@@ -43,15 +47,11 @@ function checkDataFile() {
     }
 }
 
-function loadTasks() {
-    const data = fs.readFileSync(dataPath, "utf-8");
-    return JSON.parse(data);
-}
 app.whenReady().then(() => {
 
     checkDataFile();
 
-    const list = loadTasks();
+    const list = loadTasks(dataPath);
     console.log(list);
 
     createWindow();

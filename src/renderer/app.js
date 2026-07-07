@@ -1,4 +1,6 @@
-import { getList, getListItem, setListItem } from './data.js'
+import { getList, getListItem, setListItem } from '../storage/tasks.js'
+
+window.storage.getTasks().then(tasks => console.log(tasks));
 
 window.onload = () => {
     loadTasks();
@@ -9,6 +11,8 @@ window.onload = () => {
             createTask();
         }
     });
+
+
 }
 
 document.querySelector('#add-button').addEventListener('click', () => {

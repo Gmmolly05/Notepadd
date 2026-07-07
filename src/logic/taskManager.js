@@ -1,18 +1,3 @@
-const list = [
-    {
-        id: 1,
-        text: 'Hello Item 1'
-    },
-    {
-        id: 2,
-        text: 'Goodbye Item 2'
-    },
-    {
-        id: 3,
-        text: 'Spank me Item 3'
-    }
-];
-
 let getList = () => {
     return list;
 }
