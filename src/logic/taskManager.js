@@ -1,6 +1,6 @@
 export function createTask(title, newID) {
     let newTask = {
-        id: newID,
+        id: crypto.randomUUID(),
         title: title
     };
 
