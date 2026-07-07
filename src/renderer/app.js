@@ -1,9 +1,9 @@
-console.log("renderer loaded");
+let tasks = [];
 
-window.storage.getTasks()
-    .then(tasks => {
-        console.log(tasks);
-    });
+window.storage.getTasks().then(loadedTasks => {
+    tasks = loadedTasks;
+    loadTasks();
+})
 
 window.onload = () => {
     loadTasks();
@@ -23,11 +23,10 @@ document.querySelector('#add-button').addEventListener('click', () => {
 });
 
 let loadTasks = () => {
-    let tasks = getList();
     tasks.map(task => {
         const listItem = document.createElement('li');
         listItem.classList.add('list-item')
-        listItem.textContent = task.text;
+        listItem.textContent = task.title;
         document.querySelector('#todo-list').appendChild(listItem);
 
         let deleteButton = document.createElement('button');
