@@ -1,8 +1,13 @@
 import fs from 'fs';
 
 export function loadTasks(dataPath) {
-    const data = fs.readFileSync(dataPath, "utf-8");
-    return JSON.parse(data);
+    try {
+        const data = fs.readFileSync(dataPath, "utf-8");
+        return JSON.parse(data);
+    } catch (error) {
+        return [];
+    }
+
 }
 
 export function saveTasks(dataPath, tasks) {
