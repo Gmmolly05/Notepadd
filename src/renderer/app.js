@@ -10,13 +10,13 @@ window.storage.getTasks().then(loadedTasks => {
 window.onload = () => {
     let input = document.querySelector('#item-input');
     input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && input.value !== '') {
+        if (e.key === 'Enter' && input.value.trim() !== '') {
             addTask();
         }
     });
 
     document.querySelector('#add-button').addEventListener('click', () => {
-        if(input.value === '') return;
+        if(input.value.trim() === '') return;
         addTask();
     });
 
@@ -69,7 +69,7 @@ function showInput(element, task) {
     input.setSelectionRange(input.value.length, input.value.length);
 
     input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && input.value !== '') {
+        if (e.key === 'Enter' && input.value.trim() !== '') {
             task.title = input.value;
             window.storage.saveTasks(tasks);
             element.innerHTML = buildTaskElementString(task);
