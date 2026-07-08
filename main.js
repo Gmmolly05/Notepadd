@@ -76,9 +76,14 @@ function checkForUpdates() {
         console.log('No update available');
     });
 
+    autoUpdater.on('update-downloaded', (info) => {
+        console.log('Update downloaded:', info.version);
+    });
+
     autoUpdater.on('error', console.error);
 
-    autoUpdater.checkForUpdates();
+    if (app.isPackaged) autoUpdater.checkForUpdatesAndNotify();
+    //autoUpdater.checkForUpdates();
 }
 
 app.whenReady().then(() => {
