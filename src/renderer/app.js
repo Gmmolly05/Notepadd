@@ -15,8 +15,13 @@ window.onload = () => {
         }
     });
 
+    let title = document.querySelector('#title');
+    title.addEventListener('click', (e) => {
+        showTitleInput();
+    });
+
     document.querySelector('#add-button').addEventListener('click', () => {
-        if(input.value.trim() === '') return;
+        if (input.value.trim() === '') return;
         addTask();
     });
 
@@ -31,7 +36,7 @@ window.onload = () => {
 }
 
 
-// loads tasks from storage
+// loads imported tasks
 let loadTasks = () => {
     tasks.map(task => {
         createTaskElement(task);
@@ -83,6 +88,25 @@ function showInput(element, task) {
         configureTaskElement(element, task);
     });
 
+}
+
+function showTitleInput() {
+    let title = document.querySelector('#title');
+    title.innerHTML = `<input type="text" id="item-input" value="${title.textContent}">`;
+
+    let input = title.querySelector('input');
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && input.value.trim() !== '') {
+            title.textContent = input.value;
+        }
+    });
+
+    input.addEventListener('blur', () => {
+        title.textContent = input.value;
+    });
 }
 
 function removeTask(task) {
