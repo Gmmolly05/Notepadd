@@ -1,4 +1,5 @@
 import { app, screen, ipcMain, BrowserWindow } from 'electron';
+import { autoUpdater } from 'electron-updater';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -17,7 +18,7 @@ ipcMain.handle('close-window', () => BrowserWindow.getFocusedWindow().close());
 const gotTheLock = app.requestSingleInstanceLock();
 if (!gotTheLock) {
     app.quit();
-}else{
+} else {
     app.on('second-instance', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
             createWindow();
@@ -60,20 +61,23 @@ function checkDataFile() {
     }
 }
 
+function checkForUpdates() {
+    autoUpdater.checkForUpdatesAndNotify();
+}
+
 app.whenReady().then(() => {
 
     app.setLoginItemSettings(
-        { 
-            openAtLogin: true 
+        {
+            openAtLogin: true
         }
     );
 
     checkDataFile();
 
-    const list = loadTasks(dataPath);
-    //console.log(list);
-
     createWindow();
+
+    checkForUpdates();
 
     app.on('window-all-closed', () => {
         if (process.platform !== 'darwin') {

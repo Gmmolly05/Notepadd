@@ -1,5 +1,6 @@
 {
-  "name": "electron-notes-app",
+  "name": "notepadd",
+  "productName": "Notepadd",
   "version": "1.0.3",
   "description": "",
   "main": "main.js",
@@ -11,6 +12,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gmmolly05/Notepadd.git"
+  },
   "type": "module",
   "devDependencies": {
     "electron": "^43.0.0",
@@ -24,6 +29,16 @@
     },
     "win": {
       "target": "nsis"
-    }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Gmmolly05",
+        "repo": "electron-notes-app"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.9"
   }
 }
