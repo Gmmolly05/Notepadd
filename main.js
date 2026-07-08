@@ -14,6 +14,17 @@ ipcMain.handle('set-tasks', (event, tasks) => saveTasks(dataPath, tasks));
 ipcMain.handle('minimize-window', () => BrowserWindow.getFocusedWindow().minimize());
 ipcMain.handle('close-window', () => BrowserWindow.getFocusedWindow().close());
 
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+    app.quit();
+}else{
+    app.on('second-instance', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createWindow();
+        }
+    });
+}
+
 const createWindow = () => {
 
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;

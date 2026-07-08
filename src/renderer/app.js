@@ -16,6 +16,7 @@ window.onload = () => {
     });
 
     document.querySelector('#add-button').addEventListener('click', () => {
+        if(input.value === '') return;
         addTask();
     });
 
@@ -68,7 +69,7 @@ function showInput(element, task) {
     input.setSelectionRange(input.value.length, input.value.length);
 
     input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && input.value !== '') {
             task.title = input.value;
             window.storage.saveTasks(tasks);
             element.innerHTML = buildTaskElementString(task);
@@ -105,6 +106,6 @@ function configureTaskElement(taskElement, task) {
 function buildTaskElementString(task) {
     return `
             <span>${task.title}</span>
-            <button class="delete-button">Delete</button>
+            <button class="delete-button">-</button>
     `;
 }
