@@ -76,11 +76,9 @@ function checkForUpdates() {
         console.log('No update available');
     });
 
-    autoUpdater.on('error', (error) => {
-        console.error('Update error:', error);
-    });
+    autoUpdater.on('error', console.error);
 
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.checkForUpdates();
 }
 
 app.whenReady().then(() => {
