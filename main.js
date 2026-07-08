@@ -62,6 +62,12 @@ function checkDataFile() {
 
 app.whenReady().then(() => {
 
+    app.setLoginItemSettings(
+        { 
+            openAtLogin: true 
+        }
+    );
+
     checkDataFile();
 
     const list = loadTasks(dataPath);
