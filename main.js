@@ -1,9 +1,11 @@
 import { app, screen, ipcMain, BrowserWindow } from 'electron';
-import { autoUpdater } from 'electron-updater';
+import electronUpdater from 'electron-updater';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
 import { loadTasks, saveTasks } from './src/storage/tasks.js';
+
+const { autoUpdater } = electronUpdater;
 
 const dataPath = path.join(app.getPath('userData'), 'tasks.json');
 
