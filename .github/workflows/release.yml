@@ -1,4 +1,6 @@
-name: Build and Release
+name: Build App
+
+run-name: Release ${{ github.ref_name }}
 
 on:
   push:
