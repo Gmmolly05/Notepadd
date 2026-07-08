@@ -1,4 +1,4 @@
-import {createTask, deleteTask} from '../logic/taskManager.js';
+import { createTask, deleteTask } from '../logic/taskManager.js';
 
 let tasks = [];
 
@@ -14,11 +14,12 @@ window.onload = () => {
             addTask();
         }
     });
+
+    document.querySelector('#add-button').addEventListener('click', () => {
+        addTask();
+    });
 }
 
-document.querySelector('#add-button').addEventListener('click', () => {
-    addTask();
-});
 
 // loads tasks from storage
 let loadTasks = () => {
@@ -44,18 +45,34 @@ let addTask = () => {
 function createTaskElement(task) {
     const taskElement = document.createElement('li');
     taskElement.classList.add('list-item')
-    taskElement.innerHTML = `<span>${task.title}</span>`;
+    taskElement.innerHTML = buildTaskElementString(task);
     document.querySelector('#todo-list').appendChild(taskElement);
 
-    let deleteButton = document.createElement('button');
-    deleteButton.classList.add('delete-button');
-    deleteButton.textContent = 'Delete';
-    taskElement.appendChild(deleteButton);
+    configureTaskElement(taskElement, task);
+}
 
-    deleteButton.addEventListener('click', () => {
-        removeTask(task);
-        taskElement.remove();
+function showInput(element, task) {
+    element.innerHTML = `<input type="text" id="item-input" value="${task.title}">`;
+
+    let input = element.querySelector('input');
+    input.focus();
+    input.setSelectionRange(input.value.length, input.value.length);
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            task.title = input.value;
+            window.storage.saveTasks(tasks);
+            element.innerHTML = buildTaskElementString(task);
+
+            configureTaskElement(element, task);
+        }
     });
+
+    input.addEventListener('blur', () => {
+        element.innerHTML = buildTaskElementString(task);
+        configureTaskElement(element, task);
+    });
+
 }
 
 function removeTask(task) {
@@ -63,3 +80,22 @@ function removeTask(task) {
     window.storage.saveTasks(tasks);
 }
 
+function configureTaskElement(taskElement, task) {
+
+    taskElement.querySelector('span').addEventListener('click', () => {
+        showInput(taskElement, task);
+    });
+
+    taskElement.querySelector('.delete-button').addEventListener('click', () => {
+        removeTask(task);
+        taskElement.remove();
+    });
+
+}
+
+function buildTaskElementString(task) {
+    return `
+            <span>${task.title}</span>
+            <button class="delete-button">Delete</button>
+    `;
+}
