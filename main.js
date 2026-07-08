@@ -62,6 +62,22 @@ function checkDataFile() {
 }
 
 function checkForUpdates() {
+    autoUpdater.on('checking-for-update', () => {
+        console.log('Checking for update...');
+    });
+
+    autoUpdater.on('update-available', (info) => {
+        console.log('Update available:', info.version);
+    });
+
+    autoUpdater.on('update-not-available', () => {
+        console.log('No update available');
+    });
+
+    autoUpdater.on('error', (error) => {
+        console.error('Update error:', error);
+    });
+
     autoUpdater.checkForUpdatesAndNotify();
 }
 
