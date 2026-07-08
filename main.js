@@ -1,4 +1,4 @@
-import { app, screen, ipcMain, BrowserWindow } from 'electron';
+import { app, screen, dialog, ipcMain, BrowserWindow } from 'electron';
 import electronUpdater from 'electron-updater';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -65,25 +65,47 @@ function checkDataFile() {
 
 function checkForUpdates() {
     autoUpdater.on('checking-for-update', () => {
-        console.log('Checking for update...');
+        dialog.showMessageBoxSync({
+            message: 'Checking for update...'
+        });
     });
 
     autoUpdater.on('update-available', (info) => {
-        console.log('Update available:', info.version);
+        dialog.showMessageBoxSync({
+            message: `Update available: ${info.version}`
+        });
     });
 
-    autoUpdater.on('update-not-available', () => {
-        console.log('No update available');
+    autoUpdater.on('update-not-available', (info) => {
+        dialog.showMessageBoxSync({
+            message: `No update available. Current: ${app.getVersion()}`
+        });
+    });
+
+    autoUpdater.on('download-progress', (progress) => {
+        console.log(`Download ${progress.percent}%`);
     });
 
     autoUpdater.on('update-downloaded', (info) => {
-        console.log('Update downloaded:', info.version);
+        dialog.showMessageBoxSync({
+            message: `Downloaded update: ${info.version}`
+        });
     });
 
-    autoUpdater.on('error', console.error);
+    autoUpdater.on('error', (error) => {
+        dialog.showErrorBox(
+            'Updater Error',
+            error == null ? 'unknown error' : error.toString()
+        );
+    });
 
-    if (app.isPackaged) autoUpdater.checkForUpdatesAndNotify();
-    //autoUpdater.checkForUpdates();
+    if (app.isPackaged) {
+        autoUpdater.checkForUpdatesAndNotify();
+    } else {
+        dialog.showMessageBoxSync({
+            message: 'App is not packaged'
+        });
+    }
 }
 
 app.whenReady().then(() => {

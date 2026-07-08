@@ -24,6 +24,7 @@
   "build": {
     "appId": "com.notepadd.app",
     "productName": "Notepadd",
+    "artifactName": "${productName}-Setup-${version}.${ext}",
     "directories": {
       "output": "dist"
     },
