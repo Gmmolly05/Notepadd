@@ -7,7 +7,6 @@ export function loadTasks(dataPath) {
     } catch (error) {
         return [];
     }
-
 }
 
 export function saveTasks(dataPath, tasks) {

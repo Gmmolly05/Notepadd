@@ -11,6 +11,8 @@ const __dirname = path.dirname(__filename);
 
 ipcMain.handle('get-tasks', () => loadTasks(dataPath));
 ipcMain.handle('set-tasks', (event, tasks) => saveTasks(dataPath, tasks));
+ipcMain.handle('minimize-window', () => BrowserWindow.getFocusedWindow().minimize());
+ipcMain.handle('close-window', () => BrowserWindow.getFocusedWindow().close());
 
 const createWindow = () => {
 

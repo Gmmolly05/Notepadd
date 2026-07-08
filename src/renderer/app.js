@@ -18,6 +18,15 @@ window.onload = () => {
     document.querySelector('#add-button').addEventListener('click', () => {
         addTask();
     });
+
+    document.querySelector('#close-button').addEventListener('click', () => {
+        window.app.closeWindow();
+    });
+
+    document.querySelector('#minimize-button').addEventListener('click', () => {
+        window.app.minimizeWindow();
+    });
+
 }
 
 
