@@ -44,7 +44,7 @@ let addTask = () => {
 function createTaskElement(task) {
     const taskElement = document.createElement('li');
     taskElement.classList.add('list-item')
-    taskElement.textContent = task.title;
+    taskElement.innerHTML = `<span>${task.title}</span>`;
     document.querySelector('#todo-list').appendChild(taskElement);
 
     let deleteButton = document.createElement('button');

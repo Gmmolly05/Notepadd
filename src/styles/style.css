@@ -7,6 +7,7 @@ body {
     width: 100%;
     height: 100%;
     background: transparent;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,  Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 #root {
@@ -22,8 +23,24 @@ body {
 }
 
 #title-bar {
-    margin: 0;
+    margin-right: 10px;
     -webkit-app-region: drag;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#window-controls {
+    display: flex;
+    gap: 5px;
+    -webkit-app-region: no-drag;
+}
+
+#window-controls button {
+    border: none;
+    background: transparent;
+    color: white;
+    cursor: pointer;
 }
 
 #title
