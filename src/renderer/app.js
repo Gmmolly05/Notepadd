@@ -17,7 +17,7 @@ window.onload = () => {
 
     let title = document.querySelector('#title');
     title.addEventListener('click', (e) => {
-        showTitleInput();
+        showTitleInput(title);
     });
 
     document.querySelector('#add-button').addEventListener('click', () => {
@@ -56,20 +56,18 @@ let addTask = () => {
     itemInput.value = '';
 }
 
-// This generates the HTML for a task
-function createTaskElement(task) {
-    const taskElement = document.createElement('li');
-    taskElement.classList.add('list-item')
-    taskElement.innerHTML = buildTaskElementString(task);
-    document.querySelector('#todo-list').appendChild(taskElement);
-
-    configureTaskElement(taskElement, task);
+function removeTask(task) {
+    tasks = deleteTask(tasks, task.id);
+    window.storage.saveTasks(tasks);
 }
 
+
 function showInput(element, task) {
-    element.innerHTML = `<input type="text" id="item-input" value="${task.title}">`;
+
+    element.querySelector('span').hidden = true;
 
     let input = element.querySelector('input');
+    input.hidden = false;
     input.focus();
     input.setSelectionRange(input.value.length, input.value.length);
 
@@ -90,28 +88,38 @@ function showInput(element, task) {
 
 }
 
-function showTitleInput() {
-    let title = document.querySelector('#title');
-    title.innerHTML = `<input type="text" id="item-input" value="${title.textContent}">`;
+function showTitleInput(element) {
 
-    let input = title.querySelector('input');
+    element.hidden = true;
+    let input = document.querySelector('#title-input');
+    input.hidden = false;
+    input.value = element.textContent;
     input.focus();
     input.setSelectionRange(input.value.length, input.value.length);
 
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && input.value.trim() !== '') {
-            title.textContent = input.value;
+            element.textContent = input.value;
+            input.hidden = true;
+            element.hidden = false;
         }
     });
 
     input.addEventListener('blur', () => {
-        title.textContent = input.value;
+        element.textContent = input.value;
+        input.hidden = true;
+        element.hidden = false;
     });
 }
 
-function removeTask(task) {
-    tasks = deleteTask(tasks, task.id);
-    window.storage.saveTasks(tasks);
+// This generates the HTML for a task
+function createTaskElement(task) {
+    const taskElement = document.createElement('li');
+    taskElement.classList.add('list-item')
+    taskElement.innerHTML = buildTaskElementString(task);
+    document.querySelector('#todo-list').appendChild(taskElement);
+
+    configureTaskElement(taskElement, task);
 }
 
 function configureTaskElement(taskElement, task) {
@@ -130,6 +138,7 @@ function configureTaskElement(taskElement, task) {
 function buildTaskElementString(task) {
     return `
             <span>${task.title}</span>
+            <input hidden="true" type="text" value="${task.title}">
             <button class="delete-button">-</button>
     `;
 }
