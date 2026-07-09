@@ -19,7 +19,7 @@ body {
     height: 100%;
     box-sizing: border-box;
     flex-direction: column;
-    border: 3px solid white;
+    border: 3px solid rgb(212, 210, 210);
     border-radius: 15px;
     overflow: hidden;
 
