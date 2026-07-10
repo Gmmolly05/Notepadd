@@ -9,13 +9,6 @@ export function loadTasks(dataPath) {
     }
 }
 
-export function saveLists(dataPath, lists) {
-    fs.writeFileSync(
-        dataPath,
-        JSON.stringify(lists, null, 2)
-    );
-}
-
 export function saveTasks(dataPath, tasks) {
     fs.writeFileSync(
         dataPath,
