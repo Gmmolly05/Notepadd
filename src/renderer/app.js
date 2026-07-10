@@ -1,33 +1,5 @@
 import { createTask, deleteTask, createList } from '../logic/taskManager.js';
 
-/*
-    [
-        {
-            id: 1,
-            title: 'List 1'
-            lists: []
-        },
-        {
-            id: 2,
-            title: 'Task 2'
-            lists: [
-                {
-                    id: 1,
-                    title: 'Task 1'
-                },
-                {
-                    id: 2,
-                    title: 'Task 2'
-                },
-                {
-                    id: 3,
-                    title: 'Task 3'
-                }
-            ]
-        }
-    ]
-*/
-
 let lists = [];
 
 window.storage.getTasks().then(loadedLists => {
