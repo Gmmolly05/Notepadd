@@ -13,7 +13,7 @@ body {
 
 #root {
     background: #0d0d61;
-    background: linear-gradient(180deg, rgba(13, 13, 97, 1) 35%, rgba(4, 75, 89, 1) 100%);
+    background: linear-gradient(135deg, rgba(13, 13, 97, 1) 35%, rgba(4, 75, 89, 1) 100%);
     display: flex;
     width: 100%;
     height: 100%;
@@ -33,6 +33,7 @@ body {
     align-items: center;
     padding: 10px;
     margin-top: 2px;
+    padding-bottom: 0;
 }
 
 
@@ -52,6 +53,8 @@ body {
     font-size: 30px;
     opacity: 0.3;
 }
+
+
 
 button {
     border: none;
@@ -87,6 +90,25 @@ button {
     padding: 0;
 }
 
+#list-select {
+    width: fit-content;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    background: none;
+    color: white;
+    font-family: inherit;
+    appearance: none;
+}
+
+#list-select-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    opacity: 0.3;
+}
+
 .list-item {
     list-style-type: none;
     margin: 10px;
@@ -98,6 +120,7 @@ button {
     gap: 10px;
     justify-content: space-between;
     align-items: center;
+    background-color: #04053d;
 }
 
 .form {
@@ -117,10 +140,9 @@ input {
     color: white;
     font-family: inherit;
     width: 100%;
-    
+
 }
 
-#title-input
-{
+#title-input {
     font-size: 20px;
 }

@@ -1,4 +1,14 @@
 
+export function createList() {
+    let list = {
+        id: crypto.randomUUID(),
+        title: 'New List',
+        tasks: []
+    };
+
+    return list;
+}
+
 export function createTask(title) {
     let newTask = {
         id: crypto.randomUUID(),
@@ -8,6 +18,6 @@ export function createTask(title) {
     return newTask;
 }
 
-export function deleteTask(tasks, id) {
-    return tasks.filter(task => task.id !== id);
+export function deleteTask(lists, id) {
+    return lists.filter(list => list.tasks = list.tasks.filter(task => task.id !== id));
 }

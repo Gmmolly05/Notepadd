@@ -35,7 +35,7 @@ const createWindow = () => {
     const windowHeight = 500;
     const windowWidth = 300;
 
-    const minWidth = 250;
+    const minWidth = 280;
     const minHeight = 350;
 
     const margin = 10;
