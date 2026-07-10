@@ -13,6 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 ipcMain.handle('get-tasks', () => loadTasks(dataPath));
+//ipcMain.handle('get-lists', () => loadTasks(dataPath));
 ipcMain.handle('set-tasks', (event, tasks) => saveTasks(dataPath, tasks));
 ipcMain.handle('minimize-window', () => BrowserWindow.getFocusedWindow().minimize());
 ipcMain.handle('close-window', () => BrowserWindow.getFocusedWindow().close());
@@ -35,7 +36,7 @@ const createWindow = () => {
     const windowHeight = 500;
     const windowWidth = 300;
 
-    const minWidth = 250;
+    const minWidth = 280;
     const minHeight = 350;
 
     const margin = 10;

@@ -1,6 +1,11 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("storage", {
+    
+    getLists: () => {
+        return ipcRenderer.invoke("get-lists");
+    },
+    
     getTasks: () => {
         return ipcRenderer.invoke("get-tasks");
     },

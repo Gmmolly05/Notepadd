@@ -1,10 +1,39 @@
-import { createTask, deleteTask } from '../logic/taskManager.js';
+import { createTask, deleteTask, createList } from '../logic/taskManager.js';
 
-let tasks = [];
+/*
+    [
+        {
+            id: 1,
+            title: 'List 1'
+            lists: []
+        },
+        {
+            id: 2,
+            title: 'Task 2'
+            lists: [
+                {
+                    id: 1,
+                    title: 'Task 1'
+                },
+                {
+                    id: 2,
+                    title: 'Task 2'
+                },
+                {
+                    id: 3,
+                    title: 'Task 3'
+                }
+            ]
+        }
+    ]
+*/
 
-window.storage.getTasks().then(loadedTasks => {
-    tasks = loadedTasks;
-    loadTasks();
+let lists = [];
+
+window.storage.getTasks().then(loadedLists => {
+    lists = loadedLists;
+    loadLists();
+    loadTaskElements(lists[0]);
 })
 
 window.onload = () => {
@@ -33,32 +62,39 @@ window.onload = () => {
         window.app.minimizeWindow();
     });
 
+    document.querySelector('#list-select').addEventListener('change', (e) => {
+        let list = lists.find(list => list.id === e.target.value);
+        document.querySelector('#title').textContent = list.title;
+        document.querySelectorAll('.list-item').forEach(element => {
+            element.remove();
+        })
+        loadTaskElements(list);
+    });
 }
 
 
-// loads imported tasks
-let loadTasks = () => {
-    tasks.map(task => {
-        createTaskElement(task);
-    })
-}
+
 
 // This adds a task from the UI and saves it
 let addTask = () => {
     const itemInput = document.querySelector('#item-input');
-    let newTask = createTask(itemInput.value, tasks.length + 1);
+    
+    let newTask = createTask(itemInput.value, lists.length + 1);
 
-    tasks.push(newTask);
+    // find current list by select value 
+    let list = lists.find(list => list.id === document.querySelector('#list-select').value);
 
-    window.storage.saveTasks(tasks);
+    list.tasks.push(newTask);
+
+    window.storage.saveTasks(lists);
 
     createTaskElement(newTask);
     itemInput.value = '';
 }
 
 function removeTask(task) {
-    tasks = deleteTask(tasks, task.id);
-    window.storage.saveTasks(tasks);
+    lists = deleteTask(lists, task.id);
+    window.storage.saveTasks(lists);
 }
 
 
@@ -74,7 +110,7 @@ function showInput(element, task) {
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && input.value.trim() !== '') {
             task.title = input.value;
-            window.storage.saveTasks(tasks);
+            window.storage.saveTasks(lists);
             element.innerHTML = buildTaskElementString(task);
 
             configureTaskElement(element, task);
@@ -109,6 +145,23 @@ function showTitleInput(element) {
         element.textContent = input.value;
         input.hidden = true;
         element.hidden = false;
+    });
+}
+
+let loadLists = () => {
+    lists.map(list => {
+        let listElement = document.createElement('option');
+        listElement.value = list.id;
+        listElement.textContent = list.title;
+        document.querySelector('#list-select').appendChild(listElement);
+        document.querySelector('#title').textContent = lists[0].title;
+    })
+}
+
+// loads imported lists
+let loadTaskElements = (list) => {
+    list.tasks.map(task => {
+        createTaskElement(task);
     });
 }
 
