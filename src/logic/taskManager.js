@@ -3,6 +3,7 @@ export function createList() {
     let list = {
         id: crypto.randomUUID(),
         title: 'New List',
+        version: 2,
         tasks: []
     };
 

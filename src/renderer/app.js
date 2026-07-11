@@ -5,6 +5,7 @@ let lists = [];
 window.storage.getTasks().then(loadedLists => {
     lists = loadedLists;
     loadLists();
+    if (lists.length === 0) addList();
     loadTaskElements(lists[0]);
 })
 
@@ -34,23 +35,43 @@ window.onload = () => {
         window.app.minimizeWindow();
     });
 
-    document.querySelector('#list-select').addEventListener('change', (e) => {
-        let list = lists.find(list => list.id === e.target.value);
-        document.querySelector('#title').textContent = list.title;
-        document.querySelectorAll('.list-item').forEach(element => {
-            element.remove();
-        })
-        loadTaskElements(list);
+    let listSelect = document.querySelector('#list-select');
+    listSelect.addEventListener('change', (e) => {
+        swapLists(listSelect);
     });
+
+    document.querySelector('#add-list-button').addEventListener('click', () => {
+        addList();
+        listSelect.value = lists[lists.length - 1].id;
+        swapLists(listSelect);
+    });
+
 }
 
 
+let addList = () => {
+    let newList = createList();
+    lists.push(newList);
+    window.storage.saveTasks(lists);
+    let listElement = document.createElement('option');
+    listElement.value = newList.id;
+    listElement.textContent = newList.title;
+    document.querySelector('#list-select').appendChild(listElement);
+}
 
+let swapLists = (e) => {
+    let list = lists.find(list => list.id === e.value);
+    document.querySelector('#title').textContent = list.title;
+    document.querySelectorAll('.list-item').forEach(element => {
+        element.remove();
+    })
+    loadTaskElements(list);
+}
 
 // This adds a task from the UI and saves it
 let addTask = () => {
     const itemInput = document.querySelector('#item-input');
-    
+
     let newTask = createTask(itemInput.value, lists.length + 1);
 
     // find current list by select value 
@@ -127,7 +148,7 @@ let loadLists = () => {
         listElement.textContent = list.title;
         document.querySelector('#list-select').appendChild(listElement);
         document.querySelector('#title').textContent = lists[0].title;
-    })
+    });
 }
 
 // loads imported lists
