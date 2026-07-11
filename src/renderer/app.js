@@ -119,6 +119,22 @@ function showInput(element, task) {
 
 function showTitleInput(element) {
 
+    function handleChange() {
+        element.textContent = input.value;
+        input.hidden = true;
+        element.hidden = false;
+        let currentList = lists.find(list => list.id === document.querySelector('#list-select').value);
+        currentList.title = input.value;
+
+        document.querySelectorAll('option').forEach(option => {
+            if (option.value === currentList.id) {
+                option.textContent = currentList.title;
+            }
+        });
+
+        window.storage.saveTasks(lists);
+    }
+
     element.hidden = true;
     let input = document.querySelector('#title-input');
     input.hidden = false;
@@ -128,16 +144,12 @@ function showTitleInput(element) {
 
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && input.value.trim() !== '') {
-            element.textContent = input.value;
-            input.hidden = true;
-            element.hidden = false;
+            handleChange();
         }
     });
 
     input.addEventListener('blur', () => {
-        element.textContent = input.value;
-        input.hidden = true;
-        element.hidden = false;
+        handleChange();
     });
 }
 

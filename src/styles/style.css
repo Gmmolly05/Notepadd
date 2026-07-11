@@ -101,6 +101,11 @@ button {
     appearance: none;
 }
 
+#list-select option
+{
+    background-color: #04053d;
+}
+
 #list-select-container {
     display: flex;
     gap: 10px;
