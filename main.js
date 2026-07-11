@@ -69,11 +69,6 @@ function checkDataFile() {
 }
 
 function checkForUpdates() {
-    autoUpdater.on('checking-for-update', () => {
-        dialog.showMessageBoxSync({
-            message: 'Checking for update...'
-        });
-    });
 
     autoUpdater.on('update-available', (info) => {
         dialog.showMessageBoxSync({
@@ -92,9 +87,13 @@ function checkForUpdates() {
     });
 
     autoUpdater.on('update-downloaded', (info) => {
-        dialog.showMessageBoxSync({
+        const result = dialog.showMessageBoxSync({
             message: `Downloaded update: ${info.version}`
         });
+        if (result === 0) {
+            autoUpdater.quitAndInstall();
+        }
+
     });
 
     autoUpdater.on('error', (error) => {
