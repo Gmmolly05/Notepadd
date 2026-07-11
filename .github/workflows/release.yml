@@ -90,5 +90,6 @@ jobs:
           generate_release_notes: false
           files: |
             dist/*.dmg
+            dist/*.zip
             dist/*.blockmap
             dist/latest-mac.yml
