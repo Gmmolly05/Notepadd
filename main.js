@@ -77,7 +77,7 @@ function checkForUpdates() {
     });
 
     autoUpdater.on('update-not-available', (info) => {
-        dialog.showMessageBoxSync({
+        dialog.showMessageBox({
             message: `No update available. Current: ${app.getVersion()}`
         });
     });
@@ -87,7 +87,7 @@ function checkForUpdates() {
     });
 
     autoUpdater.on('update-downloaded', (info) => {
-        const result = dialog.showMessageBoxSync({
+        const result = dialog.showMessageBox({
             message: `Downloaded update: ${info.version}`
         });
         if (result === 0) {
