@@ -1,7 +1,7 @@
 {
   "name": "notepadd",
   "productName": "Notepadd",
-  "version": "1.0.13",
+  "version": "1.1.0",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -30,6 +30,9 @@
     },
     "win": {
       "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
     },
     "publish": [
       {
