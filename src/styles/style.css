@@ -81,7 +81,23 @@ button {
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
+}
 
+::-webkit-scrollbar
+{
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, .25) transparent;
+}
+
+::-webkit-scrollbar-thumb
+{
+    background-color: rgba(0, 0, 0, .25);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track
+{
+    background-color: transparent;  
 }
 
 #todo-list {
@@ -101,8 +117,7 @@ button {
     appearance: none;
 }
 
-#list-select option
-{
+#list-select option {
     background-color: #04053d;
 }
 
@@ -112,6 +127,7 @@ button {
     align-items: center;
     padding: 10px;
     opacity: 0.3;
+    background: none;
 }
 
 .list-item {

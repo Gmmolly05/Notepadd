@@ -191,10 +191,16 @@ function configureTaskElement(taskElement, task) {
         taskElement.remove();
     });
 
+    taskElement.querySelector('input').addEventListener('change', (e) => {
+        task.completed = e.target.checked;
+        window.storage.saveTasks(lists);
+    });
+
 }
 
 function buildTaskElementString(task) {
     return `
+            <input type="checkbox" ${task.completed ? 'checked' : ''}>
             <span>${task.title}</span>
             <input hidden="true" type="text" value="${task.title}">
             <button class="delete-button">-</button>

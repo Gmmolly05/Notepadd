@@ -13,7 +13,8 @@ export function createList() {
 export function createTask(title) {
     let newTask = {
         id: crypto.randomUUID(),
-        title: title
+        title: title,
+        completed: false
     };
 
     return newTask;
