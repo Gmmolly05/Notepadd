@@ -95,7 +95,7 @@ function showInput(element, task) {
 
     element.querySelector('span').hidden = true;
 
-    let input = element.querySelector('input');
+    let input = element.querySelector('.name-input');
     input.hidden = false;
     input.focus();
     input.setSelectionRange(input.value.length, input.value.length);
@@ -111,6 +111,7 @@ function showInput(element, task) {
     });
 
     input.addEventListener('blur', () => {
+        task.title = input.value;
         element.innerHTML = buildTaskElementString(task);
         configureTaskElement(element, task);
     });
@@ -191,7 +192,7 @@ function configureTaskElement(taskElement, task) {
         taskElement.remove();
     });
 
-    taskElement.querySelector('input').addEventListener('change', (e) => {
+    taskElement.querySelector('.completed').addEventListener('change', (e) => {
         task.completed = e.target.checked;
         window.storage.saveTasks(lists);
     });
@@ -200,9 +201,9 @@ function configureTaskElement(taskElement, task) {
 
 function buildTaskElementString(task) {
     return `
-            <input type="checkbox" ${task.completed ? 'checked' : ''}>
+            <input class="completed" type="checkbox" ${task.completed ? 'checked' : ''}>
             <span>${task.title}</span>
-            <input hidden="true" type="text" value="${task.title}">
+            <input class="name-input" hidden="true" type="text" value="${task.title}">
             <button class="delete-button">-</button>
     `;
 }
