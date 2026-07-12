@@ -14,7 +14,6 @@ export function loadTasks(dataPath) {
 }
 
 export function saveTasks(dataPath, tasks) {
-    console.log(tasks);
     fs.writeFileSync(
         dataPath,
         JSON.stringify(tasks, null, 2)

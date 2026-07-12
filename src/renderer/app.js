@@ -46,17 +46,55 @@ window.onload = () => {
         swapLists(listSelect);
     });
 
+    document.querySelector('#delete-list').addEventListener('click', () => {
+        deleteList();
+        listSelect.value = lists[0].id;
+        swapLists(listSelect);
+    })
+
 }
 
+let checkNoTasks = () => {
+    let id = document.querySelector('#list-select').value;
+    if (lists.find(list => list.id === id).tasks.length === 0) showNoTasks();
+    else hideNoTasks();
+}
+
+let showNoTasks = () => {
+    let noTasks = document.querySelector('#no-tasks');
+    noTasks.hidden = false;
+    noTasks.display = "flex";
+    let listElement = document.querySelector('#list')
+    listElement.display = 'none';
+    listElement.classList.add('empty');
+
+}
+
+let hideNoTasks = () => {
+    let noTasks = document.querySelector('#no-tasks');
+    noTasks.hidden = true;
+    noTasks.display = "none";
+    let listElement = document.querySelector('#list')
+    listElement.display = 'flex';
+    listElement.classList.remove('empty');
+}
+
+let deleteList = () => {
+    let list = lists.find(list => list.id === document.querySelector('#list-select').value);
+    lists = lists.filter(list => list.id !== document.querySelector('#list-select').value);
+    saveTasks();
+    document.querySelector('#list-select').removeChild(document.querySelector('#list-select').selectedOptions[0]);
+}
 
 let addList = () => {
     let newList = createList();
     lists.push(newList);
-    window.storage.saveTasks(lists);
+    saveTasks();
     let listElement = document.createElement('option');
     listElement.value = newList.id;
     listElement.textContent = newList.title;
     document.querySelector('#list-select').appendChild(listElement);
+    showNoTasks();
 }
 
 let swapLists = (e) => {
@@ -66,6 +104,7 @@ let swapLists = (e) => {
         element.remove();
     })
     loadTaskElements(list);
+    checkNoTasks();
 }
 
 // This adds a task from the UI and saves it
@@ -79,7 +118,7 @@ let addTask = () => {
 
     list.tasks.push(newTask);
 
-    window.storage.saveTasks(lists);
+    saveTasks();
 
     createTaskElement(newTask);
     itemInput.value = '';
@@ -87,7 +126,7 @@ let addTask = () => {
 
 function removeTask(task) {
     lists = deleteTask(lists, task.id);
-    window.storage.saveTasks(lists);
+    saveTasks();
 }
 
 
@@ -103,7 +142,7 @@ function showInput(element, task) {
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && input.value.trim() !== '') {
             task.title = input.value;
-            window.storage.saveTasks(lists);
+            saveTasks();
             element.innerHTML = buildTaskElementString(task);
 
             configureTaskElement(element, task);
@@ -133,7 +172,7 @@ function showTitleInput(element) {
             }
         });
 
-        window.storage.saveTasks(lists);
+        saveTasks();
     }
 
     element.hidden = true;
@@ -194,7 +233,7 @@ function configureTaskElement(taskElement, task) {
 
     taskElement.querySelector('.completed').addEventListener('change', (e) => {
         task.completed = e.target.checked;
-        window.storage.saveTasks(lists);
+        saveTasks();
     });
 
 }
@@ -206,4 +245,10 @@ function buildTaskElementString(task) {
             <input class="name-input" hidden="true" type="text" value="${task.title}">
             <button class="delete-button">-</button>
     `;
+}
+
+function saveTasks() {
+    window.storage.saveTasks(lists).then(() => {
+        checkNoTasks();
+    });
 }

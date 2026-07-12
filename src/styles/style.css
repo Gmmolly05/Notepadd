@@ -80,24 +80,26 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: start;
+    align-items: flex-start;
 }
 
-::-webkit-scrollbar
-{
+#list.empty {
+    justify-content: center;
+    align-items: center;
+}
+
+::-webkit-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: rgba(0, 0, 0, .25) transparent;
 }
 
-::-webkit-scrollbar-thumb
-{
+::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, .25);
     border-radius: 5px;
 }
 
-::-webkit-scrollbar-track
-{
-    background-color: transparent;  
+::-webkit-scrollbar-track {
+    background-color: transparent;
 }
 
 #todo-list {
@@ -152,8 +154,7 @@ button {
     padding: 10px;
 }
 
-input
-{
+input {
     border: none;
     padding: 5px;
     border-radius: 5px;
@@ -167,11 +168,35 @@ input
     width: 100%;
 }
 
-#item-input
-{
+#item-input {
     flex: 1;
 }
 
 #title-input {
     font-size: 20px;
+}
+
+#no-tasks {
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+    font-size: 20px;
+    transform: translate(0, -20%);
+}
+
+#no-tasks span {
+    display: block;
+    opacity: 0.3;
+}
+
+#delete-list {
+    opacity: 1;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(255, 0, 0);
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.5;
 }
