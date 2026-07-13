@@ -67,7 +67,6 @@ let showNoTasks = () => {
     let listElement = document.querySelector('#list')
     listElement.display = 'none';
     listElement.classList.add('empty');
-
 }
 
 let hideNoTasks = () => {
