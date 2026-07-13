@@ -45,12 +45,14 @@ window.onload = () => {
         listSelect.value = lists[lists.length - 1].id;
         swapLists(listSelect);
     });
-
-    document.querySelector('#delete-list').addEventListener('click', () => {
-        deleteList();
-        listSelect.value = lists[0].id;
-        swapLists(listSelect);
-    })
+    let deleteButtons = document.querySelectorAll('.delete-list');
+    for (let i = 0; i < deleteButtons.length; i++) {
+        deleteButtons[i].addEventListener('click', () => {
+            deleteList();
+            listSelect.value = lists[0].id;
+            swapLists(listSelect);
+        });
+    }
 
 }
 
