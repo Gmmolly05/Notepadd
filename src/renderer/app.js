@@ -85,6 +85,7 @@ let deleteList = () => {
     lists = lists.filter(list => list.id !== document.querySelector('#list-select').value);
     saveTasks();
     document.querySelector('#list-select').removeChild(document.querySelector('#list-select').selectedOptions[0]);
+    if(lists.length === 0) addList();
 }
 
 let addList = () => {
