@@ -92,7 +92,6 @@ function checkForUpdates() {
         });
         if (result === 0) {
             autoUpdater.quitAndInstall();
-            autoUpdater.
         }
 
     });
