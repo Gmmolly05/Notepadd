@@ -88,6 +88,8 @@ function checkForUpdates() {
 
     autoUpdater.on('update-downloaded', async (info) => {
         const { response } = await dialog.showMessageBox({
+            buttons: ['Restart', 'Later'],
+            defaultId: 0,
             message: `Downloaded update: ${info.version}`
         });
         if (response === 0) {
