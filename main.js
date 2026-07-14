@@ -99,10 +99,9 @@ function checkForUpdates() {
     });
 
     autoUpdater.on('error', (error) => {
-        dialog.showErrorBox(
-            'Updater Error',
-            error == null ? 'unknown error' : error.toString()
-        );
+        dialog.showMessageBoxSync({
+            message: `Error: Could not install`
+        });
     });
 
     if (app.isPackaged) {
