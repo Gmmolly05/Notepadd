@@ -87,10 +87,10 @@ function checkForUpdates() {
     });
 
     autoUpdater.on('update-downloaded', async (info) => {
-        const { result } = await dialog.showMessageBox({
+        const { response } = await dialog.showMessageBox({
             message: `Downloaded update: ${info.version}`
         });
-        if (result === 0) {
+        if (response === 0) {
             autoUpdater.quitAndInstall();
         }
 
