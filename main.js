@@ -86,12 +86,13 @@ function checkForUpdates() {
         console.log(`Download ${progress.percent}%`);
     });
 
-    autoUpdater.on('update-downloaded', (info) => {
-        const result = dialog.showMessageBox({
+    autoUpdater.on('update-downloaded', async (info) => {
+        const { result } = await dialog.showMessageBox({
             message: `Downloaded update: ${info.version}`
         });
         if (result === 0) {
             autoUpdater.quitAndInstall();
+            autoUpdater.
         }
 
     });
