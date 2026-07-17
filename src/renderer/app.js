@@ -1,15 +1,33 @@
 import { createTask, deleteTask, createList } from '../logic/taskManager.js';
 
 let lists = [];
+let currentList;
 
 window.storage.getTasks().then(loadedLists => {
     lists = loadedLists;
     loadLists();
     if (lists.length === 0) addList();
     loadTaskElements(lists[0]);
+    currentList = lists[0];
 })
 
 window.onload = () => {
+
+    let tasks = document.querySelector('#todo-list');
+
+    Sortable.create(tasks, {
+        animation: 150,
+
+        onEnd({ oldIndex, newIndex }) {
+
+            const moved = currentList.tasks.splice(oldIndex, 1)[0];
+
+            currentList.tasks.splice(newIndex, 0, moved);
+
+            window.storage.saveTasks(lists);
+        }
+    });
+
     let input = document.querySelector('#item-input');
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && input.value.trim() !== '') {
@@ -37,6 +55,7 @@ window.onload = () => {
 
     let listSelect = document.querySelector('#list-select');
     listSelect.addEventListener('change', (e) => {
+        currentList = lists.find(list => list.id === e.target.value);
         swapLists(listSelect);
     });
 
@@ -45,6 +64,7 @@ window.onload = () => {
         listSelect.value = lists[lists.length - 1].id;
         swapLists(listSelect);
     });
+
     let deleteButtons = document.querySelectorAll('.delete-list');
     for (let i = 0; i < deleteButtons.length; i++) {
         deleteButtons[i].addEventListener('click', () => {
@@ -53,7 +73,6 @@ window.onload = () => {
             swapLists(listSelect);
         });
     }
-
 }
 
 let checkNoTasks = () => {
@@ -85,7 +104,7 @@ let deleteList = () => {
     lists = lists.filter(list => list.id !== document.querySelector('#list-select').value);
     saveTasks();
     document.querySelector('#list-select').removeChild(document.querySelector('#list-select').selectedOptions[0]);
-    if(lists.length === 0) addList();
+    if (lists.length === 0) addList();
 }
 
 let addList = () => {
@@ -254,3 +273,4 @@ function saveTasks() {
         checkNoTasks();
     });
 }
+
