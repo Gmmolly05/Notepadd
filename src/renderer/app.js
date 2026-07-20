@@ -67,12 +67,19 @@ window.onload = () => {
 
     let deleteButtons = document.querySelectorAll('.delete-list');
     for (let i = 0; i < deleteButtons.length; i++) {
-        deleteButtons[i].addEventListener('click', () => {
+        deleteButtons[i].addEventListener('click', async () => {
+            let result = await AskConfirmation(`Are you sure you want to delete ${currentList.title}?`);
+            if (result === 1) return;
             deleteList();
             listSelect.value = lists[0].id;
             swapLists(listSelect);
         });
     }
+}
+
+let AskConfirmation = async (text) => {
+    const result = await window.app.confirmDialog(text);
+    return result;
 }
 
 let checkNoTasks = () => {
@@ -116,6 +123,7 @@ let addList = () => {
     listElement.textContent = newList.title;
     document.querySelector('#list-select').appendChild(listElement);
     showNoTasks();
+    currentList = newList;
 }
 
 let swapLists = (e) => {
@@ -184,7 +192,7 @@ function showTitleInput(element) {
         element.textContent = input.value;
         input.hidden = true;
         element.hidden = false;
-        let currentList = lists.find(list => list.id === document.querySelector('#list-select').value);
+        currentList = lists.find(list => list.id === document.querySelector('#list-select').value);
         currentList.title = input.value;
 
         document.querySelectorAll('option').forEach(option => {
