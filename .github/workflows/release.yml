@@ -52,7 +52,6 @@ jobs:
             dist/*.blockmap
             dist/latest.yml
   build-mac:
-    needs: build-windows
     runs-on: macos-latest
 
     steps:
@@ -93,3 +92,42 @@ jobs:
             dist/*.zip
             dist/*.blockmap
             dist/latest-mac.yml
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify version matches tag
+        shell: bash
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          TAG_VERSION=${GITHUB_REF#refs/tags/v}
+
+          if [ "$PACKAGE_VERSION" != "$TAG_VERSION" ]; then
+            echo "Version mismatch!"
+            echo "package.json: $PACKAGE_VERSION"
+            echo "tag: $TAG_VERSION"
+            exit 1
+          fi
+
+      - name: Build App
+        run: npm run build -- --publish never
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: false
+          files: |
+            dist/*.AppImage
+            dist/*.blockmap
+            dist/latest-linux.yml

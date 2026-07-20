@@ -37,6 +37,13 @@
         "zip"
       ]
     },
+    "linux": {
+      "artifactName": "${productName}.${ext}",
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility"
+    },
     "publish": [
       {
         "provider": "github",
