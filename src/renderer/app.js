@@ -242,7 +242,7 @@ let loadTaskElements = (list) => {
 // This generates the HTML for a task
 function createTaskElement(task) {
     const taskElement = document.createElement('li');
-    taskElement.classList.add('list-item')
+    taskElement.classList.add('list-item');
     taskElement.innerHTML = buildTaskElementString(task);
     document.querySelector('#todo-list').appendChild(taskElement);
 
