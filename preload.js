@@ -1,7 +1,7 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("storage", {
-    
+
     getTasks: () => {
         return ipcRenderer.invoke("get-tasks");
     },
@@ -18,5 +18,10 @@ contextBridge.exposeInMainWorld("app", {
 
     closeWindow: () => {
         return ipcRenderer.invoke('close-window');
+    },
+
+    confirmDialog: (text) => {
+        return ipcRenderer.invoke('confirm-dialog', text);
     }
+
 });
